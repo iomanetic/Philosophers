@@ -6,7 +6,7 @@
 /*   By: tyuuki <tyuuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 11:10:31 by tyuuki            #+#    #+#             */
-/*   Updated: 2022/03/02 20:18:29 by tyuuki           ###   ########.fr       */
+/*   Updated: 2022/03/09 14:59:37 by tyuuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	philo_take_fork(t_about_philo *philo)
 
 void	philo_putdown_fork(t_about_philo *philo)
 {
-	if(philo->philo_id % 2 == 0)
+	if (philo->philo_id % 2 == 0)
 	{
 		pthread_mutex_unlock(philo->right_fork);
 		philo_message(philo, PUTD_RF);
@@ -51,11 +51,12 @@ void	philo_putdown_fork(t_about_philo *philo)
 void	philo_eat(t_about_philo *philo)
 {
 	long time;
+
 	time = philo_time();
 	philo_message(philo, EAT);
 	philo->last_eat = philo_time();
 	while(philo_time() - time < philo->data->time_to_eat)
-		usleep(500);
+		usleep(50);
 	philo_putdown_fork(philo);
 }
 
@@ -67,5 +68,5 @@ void	philo_sleep(t_about_philo *philo)
 	philo_message(philo, SLEEP);
 	time = philo_time();
 	while(philo_time() - time < philo->data->time_to_eat)
-		usleep(500);
+		usleep(50);
 }

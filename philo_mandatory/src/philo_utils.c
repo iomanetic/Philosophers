@@ -6,7 +6,7 @@
 /*   By: tyuuki <tyuuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 11:43:16 by tyuuki            #+#    #+#             */
-/*   Updated: 2022/03/02 19:29:44 by tyuuki           ###   ########.fr       */
+/*   Updated: 2022/03/09 14:24:24 by tyuuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,19 @@ void	philo_message(t_about_philo *philo, char *message)
 	pthread_mutex_lock(&philo->data->output_protect);
 	printf("%ld %d %s", philo_time() - philo->start_time, philo->philo_id, message);
 	pthread_mutex_unlock(&philo->data->output_protect);
+}
+
+void	philo_cleaner(t_philo *philo_d, t_about_philo *philos)
+{
+	int	i;
+
+	i = 0;
+	while(i < philo_d->numb_of_philo)
+	{
+		pthread_detach(philo_d->thread[i]);
+		pthread_mutex_destroy(&philo_d->forks[i]);
+		i++;
+	}
+	free(philo_d);
+	free(philos);
 }

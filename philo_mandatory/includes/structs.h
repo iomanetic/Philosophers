@@ -6,9 +6,12 @@
 /*   By: tyuuki <tyuuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 11:10:27 by tyuuki            #+#    #+#             */
-/*   Updated: 2022/03/02 20:10:09 by tyuuki           ###   ########.fr       */
+/*   Updated: 2022/03/09 13:03:09 by tyuuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef STRUCTS_H
+# define STRUCTS_H
 
 typedef struct s_philo
 {
@@ -16,6 +19,7 @@ typedef struct s_philo
 	long			time_to_die;
 	long			time_to_eat;
 	long			time_to_sleep;
+	long			must_eat_status;
 	int				numb_of_eat;
 	pthread_t		*thread;
 	pthread_mutex_t	*forks;
@@ -33,3 +37,4 @@ typedef struct s_about_philo
 	pthread_mutex_t	*right_fork;
 	t_philo			*data;
 }					t_about_philo;
+#endif

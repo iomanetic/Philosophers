@@ -6,7 +6,7 @@
 /*   By: tyuuki <tyuuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 11:07:03 by tyuuki            #+#    #+#             */
-/*   Updated: 2022/03/02 19:10:04 by tyuuki           ###   ########.fr       */
+/*   Updated: 2022/03/09 14:59:45 by tyuuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	philo_sleep(t_about_philo *philo);
 int		ft_atoi(const char *str);
 long	philo_time(void);
 void	philo_message(t_about_philo *philo, char *message);
+void	philo_cleaner(t_philo *philo_d, t_about_philo *philos);
 # endif
 
 #endif

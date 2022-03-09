@@ -6,7 +6,7 @@
 /*   By: tyuuki <tyuuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 11:10:33 by tyuuki            #+#    #+#             */
-/*   Updated: 2022/03/02 20:10:57 by tyuuki           ###   ########.fr       */
+/*   Updated: 2022/03/09 12:59:58 by tyuuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	philo_mutex_init(t_philo **philo)
 	int	i;
 
 	i = 0;
-	while(i < (*philo)->numb_of_philo)
+	while (i < (*philo)->numb_of_philo)
 	{
 		pthread_mutex_init(&(*philo)->forks[i], NULL);
 		i++;
@@ -50,6 +50,7 @@ void	philo_info_init(t_philo **philo, t_about_philo **philos)
 			&(*philo)->forks[(i + 1) % (*philo)->numb_of_philo];
 		(*philos)[i].right_fork = &(*philo)->forks[i];
 		(*philos)[i].data = *philo;
+		(*philos)[i].start_time = philo_time();
 		i++;
 	}
 }
@@ -62,7 +63,10 @@ void	philo_init(t_philo **philo, t_about_philo **philos, char **ag)
 	(*philo)->time_to_eat = ft_atoi(ag[2]);
 	(*philo)->time_to_sleep = ft_atoi(ag[3]);
 	if (ag[4])
+	{
 		(*philo)->numb_of_eat = ft_atoi(ag[4]);
+		(*philo)->must_eat_status = (*philo)->numb_of_eat * (*philo)->numb_of_philo;
+	}
 	else
 		(*philo)->numb_of_eat = -1;
 	philo_malloc(philo, philos);
