@@ -6,7 +6,7 @@
 /*   By: tyuuki <tyuuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 11:10:31 by tyuuki            #+#    #+#             */
-/*   Updated: 2022/03/09 14:59:37 by tyuuki           ###   ########.fr       */
+/*   Updated: 2022/03/10 19:07:30 by tyuuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,16 @@ void	philo_putdown_fork(t_about_philo *philo)
 void	philo_eat(t_about_philo *philo)
 {
 	long time;
-
+	
 	time = philo_time();
-	philo_message(philo, EAT);
 	philo->last_eat = philo_time();
+	philo_message(philo, EAT);
+	if(philo->data->must_eat_sum == 1)
+	{
+		philo->data->must_eat_status = 0;
+		pthread_mutex_lock(&philo->data->output_protect);
+	}
+	philo->data->must_eat_sum--;
 	while(philo_time() - time < philo->data->time_to_eat)
 		usleep(50);
 	philo_putdown_fork(philo);

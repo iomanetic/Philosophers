@@ -6,7 +6,7 @@
 /*   By: tyuuki <tyuuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 11:43:16 by tyuuki            #+#    #+#             */
-/*   Updated: 2022/03/09 14:24:24 by tyuuki           ###   ########.fr       */
+/*   Updated: 2022/03/10 19:02:51 by tyuuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ long philo_time(void)
 void	philo_message(t_about_philo *philo, char *message)
 {
 	pthread_mutex_lock(&philo->data->output_protect);
-	printf("%ld %d %s", philo_time() - philo->start_time, philo->philo_id, message);
+	if (philo->data->must_eat_status)
+		printf("%ld %zu %s", philo_time() - philo->start_time, philo->philo_id, message);
 	pthread_mutex_unlock(&philo->data->output_protect);
 }
 
