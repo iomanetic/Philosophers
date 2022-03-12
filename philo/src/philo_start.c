@@ -30,14 +30,17 @@ void	philos_live(t_data *info)
 		i = 0;
 		while((long)i < info->numb_of_philo)
 		{
+			pthread_mutex_lock(&info->inc_mutex);
 			time = philo_time() - info->philo[i].last_eat;
 			if(time > info->time_to_die)
 			{
 				pthread_mutex_lock(&info->out_mutex);
+				info->philo[i].live = 0;
 				printf("%ld %ld %s", philo_time() - info->philo[i].start_time, \
-					info->philo[i].id, DIE);
+				info->philo[i].id, DIE);
 				return ;
 			}
+			pthread_mutex_unlock(&info->inc_mutex);
 			i++;
 		}
 	}

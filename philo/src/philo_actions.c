@@ -16,18 +16,16 @@ void	philo_take_fork(t_philo *philo)
 {
 	if(!philo->id % 2)
 	{
-		philo_message(philo, THINK);
-		pthread_mutex_lock(philo->right_fork);
-		philo_message(philo, TAKE_F);
 		pthread_mutex_lock(philo->left_fork);
+		philo_message(philo, TAKE_F);
+		pthread_mutex_lock(philo->right_fork);
 		philo_message(philo, TAKE_F);
 	}
 	else
 	{
-		philo_message(philo, THINK);
-		pthread_mutex_lock(philo->left_fork);
-		philo_message(philo, TAKE_F);
 		pthread_mutex_lock(philo->right_fork);
+		philo_message(philo, TAKE_F);
+		pthread_mutex_lock(philo->left_fork);
 		philo_message(philo, TAKE_F);
 	}
 }
@@ -36,13 +34,13 @@ void	philo_putdown_fork(t_philo *philo)
 {
 	if(!philo->id % 2)
 	{
-		pthread_mutex_unlock(philo->left_fork);
 		pthread_mutex_unlock(philo->right_fork);
+		pthread_mutex_unlock(philo->left_fork);
 	}
 	else
 	{
-		pthread_mutex_unlock(philo->right_fork);
 		pthread_mutex_unlock(philo->left_fork);
+		pthread_mutex_unlock(philo->right_fork);
 	}
 }
 
@@ -68,5 +66,6 @@ void	philo_sleep(t_philo *philo)
 	time = philo_time();
 	pthread_mutex_unlock(&philo->data->inc_mutex);
 	while(philo_time() - time < philo->data->time_to_sleep)
-		usleep(500);
+		usleep(100);
+	philo_message(philo, THINK);
 }

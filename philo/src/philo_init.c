@@ -57,9 +57,9 @@ void	philo_write_data(t_data *info)
 		info->philo[i].id = i + 1;
 		info->philo[i].live = 1;
 		info->philo[i].data = info;
-		info->philo[i].right_fork = &info->forks[(i + 1) % info->numb_of_philo];
+		info->philo[i].right_fork = &info->forks[i];
 		info->philo[i].left_fork = \
-			&info->forks[i];
+			&info->forks[(i + 1) % info->numb_of_philo];
 		info->philo[i].last_eat = philo_time();
 		info->philo[i].start_time = philo_time();
 		i++;
@@ -73,7 +73,10 @@ int	philo_init(t_data *info, char **ag)
 	info->time_to_eat = ft_atoi(ag[2]);
 	info->time_to_sleep = ft_atoi(ag[3]);
 	if(ag[4])
+	{
 		info->numb_of_eat = ft_atoi(ag[4]);
+		info->must_eat = 0;
+	}
 	else
 		info->numb_of_eat = -1;
 	if(!philo_malloc(info))

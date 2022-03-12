@@ -45,6 +45,7 @@ void	philo_sleep(t_philo *philo);
 int		ft_atoi(const char *str);
 long	philo_time(void);
 void	philo_message(t_philo *philo, char *message);
+int		check_lives(t_data *info);
 # endif
 
 #endif

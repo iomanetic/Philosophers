@@ -20,6 +20,7 @@ typedef struct s_data
 	long			time_to_eat;
 	long			time_to_sleep;
 	long			numb_of_eat;
+	long			must_eat;
 	struct s_philo	*philo;
 	pthread_t		*thread;
 	pthread_mutex_t	*forks;
