@@ -12,67 +12,61 @@
 
 #include "../includes/philo.h"
 
-void	philo_take_fork(t_about_philo *philo)
+void	philo_take_fork(t_philo *philo)
 {
-	if (philo->philo_id % 2 == 0)
+	if(!philo->id % 2)
 	{
-		pthread_mutex_lock(philo->left_fork);
-		philo_message(philo, TOOK_LF);
+		philo_message(philo, THINK);
 		pthread_mutex_lock(philo->right_fork);
-		philo_message(philo, TOOK_RF);
+		philo_message(philo, TAKE_F);
+		pthread_mutex_lock(philo->left_fork);
+		philo_message(philo, TAKE_F);
 	}
 	else
 	{
-		pthread_mutex_lock(philo->right_fork);
-		philo_message(philo, TOOK_RF);
+		philo_message(philo, THINK);
 		pthread_mutex_lock(philo->left_fork);
-		philo_message(philo, TOOK_LF);
+		philo_message(philo, TAKE_F);
+		pthread_mutex_lock(philo->right_fork);
+		philo_message(philo, TAKE_F);
 	}
 }
 
-void	philo_putdown_fork(t_about_philo *philo)
+void	philo_putdown_fork(t_philo *philo)
 {
-	if (philo->philo_id % 2 == 0)
+	if(!philo->id % 2)
 	{
-		pthread_mutex_unlock(philo->right_fork);
-		philo_message(philo, PUTD_RF);
 		pthread_mutex_unlock(philo->left_fork);
-		philo_message(philo, PUTD_LF);
+		pthread_mutex_unlock(philo->right_fork);
 	}
 	else
 	{
-		pthread_mutex_unlock(philo->left_fork);
-		philo_message(philo, PUTD_LF);
 		pthread_mutex_unlock(philo->right_fork);
-		philo_message(philo, PUTD_RF);
+		pthread_mutex_unlock(philo->left_fork);
 	}
 }
 
-void	philo_eat(t_about_philo *philo)
-{
-	long time;
-	
-	time = philo_time();
-	philo->last_eat = philo_time();
-	philo_message(philo, EAT);
-	if(philo->data->must_eat_sum == 1)
-	{
-		philo->data->must_eat_status = 0;
-		pthread_mutex_lock(&philo->data->output_protect);
-	}
-	philo->data->must_eat_sum--;
-	while(philo_time() - time < philo->data->time_to_eat)
-		usleep(50);
-	philo_putdown_fork(philo);
-}
-
-void	philo_sleep(t_about_philo *philo)
+void	philo_eat(t_philo *philo)
 {
 	long	time;
 
-	philo_message(philo, THINK);
-	philo_message(philo, SLEEP);
+	philo_message(philo, EAT);
+	pthread_mutex_lock(&philo->data->inc_mutex);
+	philo->last_eat = philo_time();
 	time = philo_time();
+	pthread_mutex_unlock(&philo->data->inc_mutex);
 	while(philo_time() - time < philo->data->time_to_eat)
-		usleep(50);
+		usleep(100);
+	philo_putdown_fork(philo);
+}
+
+void	philo_sleep(t_philo *philo)
+{
+	long	time;
+
+	pthread_mutex_lock(&philo->data->inc_mutex);
+	time = philo_time();
+	pthread_mutex_unlock(&philo->data->inc_mutex);
+	while(philo_time() - time < philo->data->time_to_sleep)
+		usleep(500);
 }

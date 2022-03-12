@@ -14,15 +14,14 @@
 
 int	main(int argc, char **argv)
 {
-	t_philo			*philo;
-	t_about_philo	*philos;
+	t_data	info;
 
 	(void)argc;
-	philo = NULL;
-	philos = NULL;
 	if (!philo_validation(&argv[1]))
 		return (FALSE);
-	philo_init(&philo, &philos, &argv[1]);
-	philo_start(philo, philos);
+	if(!philo_init(&info, &argv[1]))
+		return (FALSE);
+	if(!philo_start(&info))
+		return (FALSE);
 	return (TRUE);
 }

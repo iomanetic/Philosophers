@@ -16,21 +16,20 @@
 # ifndef PHILO_REPLICS
 #  define PHILO_REPLICS
 
-#  define EAT "EATING\n"
-#  define SLEEP "SLEEPING\n"
-#  define THINK "THINKING\n"
-#  define TOOK_RF "TOOK A RIGHT FORK\n"
-#  define TOOK_LF "TOOK A LEFT FORK\n"
-#  define PUTD_RF "PUT DOWN A RIGHT FORK\n"
-#  define PUTD_LF "PUT DOWN A LEFT FORK\n"
-#  define DIE "IS DIE\n"
+#  define TAKE_F "has taken a fork\n"
+#  define EAT "is eating\n"
+#  define SLEEP "is sleeping\n"
+#  define THINK "is thinking\n"
+#  define DIE "died\n"
 # endif
 
 # ifndef PHILO_ERROS
 #  define PHILO_ERROS
 
 #  define NOP "numbers of params < 5 or > 6\n"
-#  define NVS "params of programm should be only integer and < 1\n"
+#  define NVS "params of programm should be only integer and > 1\n"
+#  define EMI "error mutex init\n"
+#  define EMA "error memory allocated\n"
 # endif
 
 # ifndef COLORS
@@ -47,6 +46,8 @@
 #  define FALSE 0
 #  define E_NOP 2
 #  define E_NVS 3
+#  define E_EMI 4
+#  define E_EMA 5
 # endif
 
 #endif

@@ -13,28 +13,29 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-typedef struct s_philo
+typedef struct s_data
 {
-	int				numb_of_philo;
+	long			numb_of_philo;
 	long			time_to_die;
 	long			time_to_eat;
 	long			time_to_sleep;
-	int				numb_of_eat;
-	int				must_eat_sum;
-	int				must_eat_status;
+	long			numb_of_eat;
+	struct s_philo	*philo;
 	pthread_t		*thread;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	output_protect;
-}					t_philo;
+	pthread_mutex_t	out_mutex;
+	pthread_mutex_t	inc_mutex;
+}					t_data;
 
-typedef struct s_about_philo
+typedef struct s_philo
 {
-	long			last_eat;
-	size_t			live_status;
-	size_t			philo_id;
+	size_t			last_eat;
+	size_t			live;
+	size_t			id;
 	long			start_time;
+	t_data			*data;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
-	t_philo			*data;
-}					t_about_philo;
+}					t_philo;
+
 #endif

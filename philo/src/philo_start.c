@@ -12,44 +12,43 @@
 
 #include "../includes/philo.h"
 
-int	philo_status(t_about_philo *philo)
+int	philo_live(t_philo *philo)
 {
-	if (!philo->live_status)
+	if(!philo->live)
 		return (FALSE);
 	return (TRUE);
 }
 
-void	check_die(t_about_philo *philo, t_philo *philo_data)
+void	philos_live(t_data *info)
 {
-	int 	i;
+	size_t	i;
 	long	time;
 
-	while (philo_data->must_eat_status)
+	i = 0;
+	while(1)
 	{
 		i = 0;
-		while (i < philo->data->numb_of_philo
-			&& philo_data->must_eat_status)
+		while((long)i < info->numb_of_philo)
 		{
-			time = philo_time() - philo[i].last_eat;
-			if (time > philo->data->time_to_die)
+			time = philo_time() - info->philo[i].last_eat;
+			if(time > info->time_to_die)
 			{
-				printf("%ld %zu %s", philo_time() - philo->start_time, philo->philo_id, DIE);
-				philo[i].live_status = 0;
-				philo_cleaner(philo_data, philo);
+				pthread_mutex_lock(&info->out_mutex);
+				printf("%ld %ld %s", philo_time() - info->philo[i].start_time, \
+					info->philo[i].id, DIE);
 				return ;
 			}
 			i++;
 		}
 	}
-	philo_cleaner(philo_data, philo);
 }
 
-void	*philo_actions(void *philos)
+void	*philo_action(void *philo_i)
 {
-	t_about_philo	*philo;
-	
-	philo = (t_about_philo *)philos;
-	while (philo_status(philo))
+	t_philo	*philo;
+
+	philo = (t_philo *)philo_i;
+	while(philo_live(philo))
 	{
 		philo_take_fork(philo);
 		philo_eat(philo);
@@ -58,16 +57,19 @@ void	*philo_actions(void *philos)
 	return (NULL);
 }
 
-void	philo_start(t_philo *philo, t_about_philo *philos)
+int	philo_start(t_data *info)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	while (i < philo->numb_of_philo)
+	while ((long)i < info->numb_of_philo)
 	{
-		pthread_create(&philo->thread[i], NULL, philo_actions, &philos[i]);
+		if(pthread_create(&info->thread[i], NULL, 
+			philo_action, &info->philo[i]) != 0)
+			return (FALSE);
 		i++;
-		usleep(50);
+		usleep(100);
 	}
-	check_die(philos, philo);
+	philos_live(info);
+	return (TRUE);
 }

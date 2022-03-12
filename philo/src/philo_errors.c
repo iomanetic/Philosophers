@@ -19,9 +19,19 @@ int	philo_errors(int flag)
 		printf("%s", YELLOW NOP WHITE);
 		return (FALSE);
 	}
-	if (flag == E_NVS)
+	else if (flag == E_NVS)
 	{
 		printf("%s", YELLOW NVS WHITE);
+		return (FALSE);
+	}
+	else if (flag == E_EMI)
+	{
+		printf("%s", YELLOW EMI WHITE);
+		return (FALSE);
+	}
+	else if (flag == E_EMA)
+	{
+		printf("%s", YELLOW EMA WHITE);
 		return (FALSE);
 	}
 	return (TRUE);
