@@ -50,24 +50,42 @@ void	philo_message(t_philo *philo, char *message)
 	pthread_mutex_unlock(&philo->data->out_mutex);
 }
 
-// int	check_lives(t_data *info)
-// {
-// 	size_t	i;
+int	check_lives(t_data *info)
+{
+	size_t	i;
 
-// 	i = 0;
-// 	while ((long)i < info->numb_of_philo)
-// 	{
-// 		if (!info->philo[i].live)
-// 			return (FALSE);
-// 		pthread_mutex_lock(&info->inc_mutex);
-// 		if (info->eat_status != -1 \
-// 			&& info->must_eat == info->numb_of_philo * info->numb_of_eat)
-// 		{
-// 			info->eat_status = 0;
-// 			return (FALSE);
-// 		}
-// 		pthread_mutex_unlock(&info->inc_mutex);
-// 		i++;
-// 	}
-// 	return (TRUE);
-// }
+	i = 0;
+	while ((long)i < info->numb_of_philo)
+	{
+		pthread_mutex_lock(&info->inc_mutex);
+		if (!info->philo[i].live)
+			return (FALSE);
+		else if (info->eat_status != -1 \
+				&& !info->must_eat)
+		{
+			info->eat_status = 0;
+			return (FALSE);
+		}
+		i++;
+		pthread_mutex_unlock(&info->inc_mutex);
+	}
+	return (TRUE);
+}
+
+void	philo_cleaner(t_data *info)
+{
+	size_t	i;
+
+	i = 0;
+	while ((long)i < info->numb_of_philo)
+	{
+		pthread_detach(info->thread[i]);
+		pthread_mutex_destroy(&info->forks[i]);
+		i++;
+	}
+	pthread_mutex_destroy(&info->inc_mutex);
+	pthread_mutex_destroy(&info->out_mutex);
+	free(info->philo);
+	free(info->thread);
+	free(info->forks);
+}

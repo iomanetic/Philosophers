@@ -75,10 +75,15 @@ int	philo_init(t_data *info, char **ag)
 	if(ag[4])
 	{
 		info->numb_of_eat = ft_atoi(ag[4]);
-		info->must_eat = 0;
+		info->must_eat = info->numb_of_eat * info->numb_of_philo;
+		info->eat_status = 1;
 	}
 	else
+	{
 		info->numb_of_eat = -1;
+		info->eat_status = -1;
+		info->must_eat = -1;
+	}
 	if(!philo_malloc(info))
 		return (philo_errors(E_EMA));
 	if(!philo_mutex_init(info))

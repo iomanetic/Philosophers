@@ -12,38 +12,31 @@
 
 #include "../includes/philo.h"
 
-int	philo_live(t_philo *philo)
-{
-	if(!philo->live)
-		return (FALSE);
-	return (TRUE);
-}
-
 void	philos_live(t_data *info)
 {
 	size_t	i;
 	long	time;
 
-	i = 0;
-	while(1)
+	while (info->eat_status)
 	{
 		i = 0;
-		while((long)i < info->numb_of_philo)
+		while ((long)i < info->numb_of_philo \
+			&& check_lives(info))
 		{
 			pthread_mutex_lock(&info->inc_mutex);
 			time = philo_time() - info->philo[i].last_eat;
-			if(time > info->time_to_die)
+			if (time > info->time_to_die)
 			{
-				pthread_mutex_lock(&info->out_mutex);
+				philo_message(&info->philo[i], DIE);
 				info->philo[i].live = 0;
-				printf("%ld %ld %s", philo_time() - info->philo[i].start_time, \
-				info->philo[i].id, DIE);
+				philo_cleaner(info);
 				return ;
 			}
-			pthread_mutex_unlock(&info->inc_mutex);
 			i++;
+			pthread_mutex_unlock(&info->inc_mutex);
 		}
 	}
+	philo_cleaner(info);
 }
 
 void	*philo_action(void *philo_i)
@@ -51,7 +44,7 @@ void	*philo_action(void *philo_i)
 	t_philo	*philo;
 
 	philo = (t_philo *)philo_i;
-	while(philo_live(philo))
+	while (1)
 	{
 		philo_take_fork(philo);
 		philo_eat(philo);

@@ -48,10 +48,13 @@ void	philo_eat(t_philo *philo)
 {
 	long	time;
 
-	philo_message(philo, EAT);
 	pthread_mutex_lock(&philo->data->inc_mutex);
-	philo->last_eat = philo_time();
+	philo_message(philo, EAT);
+	if(philo->data->eat_status == 1
+		&& philo->data->must_eat - 1 != -1)
+		philo->data->must_eat--;
 	time = philo_time();
+	philo->last_eat = philo_time();
 	pthread_mutex_unlock(&philo->data->inc_mutex);
 	while(philo_time() - time < philo->data->time_to_eat)
 		usleep(100);
@@ -63,6 +66,7 @@ void	philo_sleep(t_philo *philo)
 	long	time;
 
 	pthread_mutex_lock(&philo->data->inc_mutex);
+	philo_message(philo, SLEEP);
 	time = philo_time();
 	pthread_mutex_unlock(&philo->data->inc_mutex);
 	while(philo_time() - time < philo->data->time_to_sleep)
