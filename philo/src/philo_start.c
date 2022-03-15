@@ -60,11 +60,11 @@ int	philo_start(t_data *info)
 	i = 0;
 	while ((long)i < info->numb_of_philo)
 	{
-		if(pthread_create(&info->thread[i], NULL, 
-			philo_action, &info->philo[i]) != 0)
+		if (pthread_create(&info->thread[i], NULL,
+				philo_action, &info->philo[i]) != 0)
 			return (FALSE);
 		i++;
-		usleep(100);
+		usleep(1350);
 	}
 	philos_live(info);
 	return (TRUE);

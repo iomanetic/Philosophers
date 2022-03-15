@@ -19,9 +19,9 @@ int	main(int argc, char **argv)
 	(void)argc;
 	if (!philo_validation(&argv[1]))
 		return (FALSE);
-	if(!philo_init(&info, &argv[1]))
+	if (!philo_init(&info, &argv[1]))
 		return (FALSE);
-	if(!philo_start(&info))
+	if (!philo_start(&info))
 		return (FALSE);
 	return (TRUE);
 }

@@ -34,7 +34,7 @@ int	ft_atoi(const char *str)
 	return (output);
 }
 
-long philo_time(void)
+long	philo_time(void)
 {
 	struct timeval	t;
 
@@ -46,7 +46,7 @@ void	philo_message(t_philo *philo, char *message)
 {
 	pthread_mutex_lock(&philo->data->out_mutex);
 	printf("%ld %zu %s", philo_time() - philo->start_time,
-			philo->id, message);
+		philo->id, message);
 	pthread_mutex_unlock(&philo->data->out_mutex);
 }
 
@@ -60,8 +60,8 @@ int	check_lives(t_data *info)
 		pthread_mutex_lock(&info->inc_mutex);
 		if (!info->philo[i].live)
 			return (FALSE);
-		else if (info->eat_status != -1 \
-				&& !info->must_eat)
+		else if ((info->eat_status != -1 \
+				&& !info->must_eat))
 		{
 			info->eat_status = 0;
 			return (FALSE);

@@ -16,15 +16,15 @@ int	philo_malloc(t_data *info)
 {
 	info->philo = (t_philo *) \
 		malloc(sizeof(t_philo) * info->numb_of_philo);
-	if(!info->philo)
+	if (!info->philo)
 		return (FALSE);
 	info->forks = (pthread_mutex_t *) \
 		malloc(sizeof(pthread_mutex_t) * info->numb_of_philo);
-	if(!info->forks)
+	if (!info->forks)
 		return (FALSE);
-	info->thread = (pthread_t *)  \
+	info->thread = (pthread_t *) \
 		malloc(sizeof(pthread_t) * info->numb_of_philo);
-	if(!info->thread)
+	if (!info->thread)
 		return (FALSE);
 	return (TRUE);
 }
@@ -36,13 +36,13 @@ int	philo_mutex_init(t_data *info)
 	i = 0;
 	while ((long)i < info->numb_of_philo)
 	{
-		if(pthread_mutex_init(&info->forks[i], NULL) != 0)
+		if (pthread_mutex_init(&info->forks[i], NULL) != 0)
 			return (FALSE);
 		i++;
 	}
-	if(pthread_mutex_init(&info->out_mutex, NULL) != 0)
+	if (pthread_mutex_init(&info->out_mutex, NULL) != 0)
 		return (FALSE);
-	if(pthread_mutex_init(&info->inc_mutex, NULL) != 0)
+	if (pthread_mutex_init(&info->inc_mutex, NULL) != 0)
 		return (FALSE);
 	return (TRUE);
 }
@@ -72,7 +72,7 @@ int	philo_init(t_data *info, char **ag)
 	info->time_to_die = ft_atoi(ag[1]);
 	info->time_to_eat = ft_atoi(ag[2]);
 	info->time_to_sleep = ft_atoi(ag[3]);
-	if(ag[4])
+	if (ag[4])
 	{
 		info->numb_of_eat = ft_atoi(ag[4]);
 		info->must_eat = info->numb_of_eat * info->numb_of_philo;
@@ -84,9 +84,9 @@ int	philo_init(t_data *info, char **ag)
 		info->eat_status = -1;
 		info->must_eat = -1;
 	}
-	if(!philo_malloc(info))
+	if (!philo_malloc(info))
 		return (philo_errors(E_EMA));
-	if(!philo_mutex_init(info))
+	if (!philo_mutex_init(info))
 		return (philo_errors(E_EMI));
 	philo_write_data(info);
 	return (TRUE);
