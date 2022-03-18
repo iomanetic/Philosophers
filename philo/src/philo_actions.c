@@ -74,8 +74,8 @@ void	philo_eat(t_philo *philo)
 	if (!can_eat(philo))
 		return ;
 	pthread_mutex_lock(&philo->data->inc_mutex);
-	time = philo_time();
 	philo->last_eat = philo_time();
+	time = philo_time();
 	pthread_mutex_unlock(&philo->data->inc_mutex);
 	while (philo_time() - time < philo->data->time_to_eat)
 		usleep(500);
@@ -86,8 +86,8 @@ void	philo_sleep(t_philo *philo)
 {
 	long	time;
 
-	pthread_mutex_lock(&philo->data->inc_mutex);
 	philo_message(philo, SLEEP);
+	pthread_mutex_lock(&philo->data->inc_mutex);
 	time = philo_time();
 	pthread_mutex_unlock(&philo->data->inc_mutex);
 	while (philo_time() - time < philo->data->time_to_sleep)

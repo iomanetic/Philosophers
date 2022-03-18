@@ -27,7 +27,9 @@ void	philos_live(t_data *info)
 			time = philo_time() - info->philo[i].last_eat;
 			if (time > info->time_to_die)
 			{
-				philo_message(&info->philo[i], DIE);
+				pthread_mutex_lock(&info->out_mutex);
+				printf("%ld %zu %s", philo_time() - info->philo[i].start_time,
+					info->philo[i].id, DIE);
 				info->philo[i].live = 0;
 				philo_cleaner(info);
 				return ;
@@ -64,7 +66,7 @@ int	philo_start(t_data *info)
 				philo_action, &info->philo[i]) != 0)
 			return (FALSE);
 		i++;
-		usleep(1350);
+		usleep(500);
 	}
 	philos_live(info);
 	return (TRUE);

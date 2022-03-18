@@ -1,6 +1,6 @@
-NAME_M			=	philo
+NAME			=	philo
 
-SRC_MANDATORY	=	philo.c \
+SRC	=				philo.c \
 					src/philo_valid.c \
 					src/philo_init.c \
 					src/philo_start.c \
@@ -8,9 +8,9 @@ SRC_MANDATORY	=	philo.c \
 					src/philo_utils.c \
 					src/philo_errors.c \
 
-OBJ_M			=	$(patsubst %.c,%.o,$(SRC_MANDATORY))
+OBJ			=		$(patsubst %.c,%.o,$(SRC))
 
-HEADERS_M		=	includes/philo.h \
+HEADERS		=		includes/philo.h \
 					includes/defines.h \
 					includes/structs.h \
 
@@ -18,18 +18,18 @@ CC				=	gcc
 
 CFLAGS			=	-O2 -Wall -Wextra -Werror
 
-all: $(NAME_M)
+all: $(NAME)
 
-$(NAME_M): $(OBJ_M)
-	$(CC) $(CFLAGS) $(OBJ_M) -o $@
+$(NAME): $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) -o $@
 
-%.o: %.c $(HEADERS_M)
+%.o: %.c $(HEADERS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 re: fclean all
 
 clean:
-	rm -rf $(OBJ_M)
+	rm -rf $(OBJ)
 
 fclean: clean
-	rm -rf $(NAME_M)
+	rm -rf $(NAME)
