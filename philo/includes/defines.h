@@ -30,6 +30,7 @@
 #  define NVS "params of programm should be only integer and > 1\n"
 #  define EMI "error mutex init\n"
 #  define EMA "error memory allocated\n"
+#  define ETC "error thread create"
 # endif
 
 # ifndef COLORS
@@ -48,6 +49,7 @@
 #  define E_NVS 3
 #  define E_EMI 4
 #  define E_EMA 5
+#  define E_ETC 6
 # endif
 
 #endif

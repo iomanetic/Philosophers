@@ -34,5 +34,10 @@ int	philo_errors(int flag)
 		printf("%s", YELLOW EMA WHITE);
 		return (FALSE);
 	}
+	else if (flag == E_ETC)
+	{
+		printf("%s", YELLOW ETC WHITE);
+		return (FALSE);
+	}
 	return (TRUE);
 }

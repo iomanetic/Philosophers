@@ -64,7 +64,7 @@ int	philo_start(t_data *info)
 	{
 		if (pthread_create(&info->thread[i], NULL,
 				philo_action, &info->philo[i]) != 0)
-			return (FALSE);
+			return (philo_errors(E_ETC));
 		i++;
 		usleep(500);
 	}
