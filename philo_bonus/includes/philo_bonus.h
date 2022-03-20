@@ -10,6 +10,7 @@
 # include <fcntl.h>
 # include <sys/stat.h>
 # include <limits.h>
+# include <signal.h>
 # include "defines_bonus.h"
 # include "structs_bonus.h"
 
@@ -22,11 +23,21 @@ int		philo_init(t_data *info, char **ag);
 int		philo_start(t_data *info);
 # endif
 
+# ifndef PHILO_ACTIONS
+#  define PHILO_ACTIONS
+
+void	philo_take_fork(t_philo *philo);
+void	philo_eat(t_philo *philo);
+void	philo_sleep(t_philo *philo);
+# endif
+
 # ifndef PHILO_UTILS
 #  define PHILO_UTILS
 
 int		ft_atoi(const char *str);
 long	philo_time(void);
+void	philo_message(t_philo *philo, char *message);
+void	philo_clean(t_data *info);
 # endif
 
 #endif

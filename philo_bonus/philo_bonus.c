@@ -9,5 +9,7 @@ int main(int argc, char **argv)
 		return (FALSE);
 	if(!philo_init(&info, &argv[1]))
 		return (FALSE);
+	if(!philo_start(&info))
+		return (FALSE);
 	return (TRUE);
 }

@@ -14,6 +14,7 @@ typedef struct s_data
 	sem_t			*sem_forks;
 	sem_t			*sem_exit;
 	sem_t			*sem_out;
+	sem_t			*sem_inc;
 	struct s_philo	*philo;
 }					t_data;
 

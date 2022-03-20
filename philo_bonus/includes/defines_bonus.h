@@ -1,6 +1,16 @@
 #ifndef DEFINES_BONUS_H
 # define DEFINES_BONUS_H
 
+# ifndef PHILO_REPLICS
+#  define PHILO_REPLICS
+
+#  define TAKE_F "has taken a fork\n"
+#  define EAT "is eating\n"
+#  define SLEEP "is sleeping\n"
+#  define THINK "is thinking\n"
+#  define DIE "died\n"
+# endif
+
 # ifndef PHILO_ERROS
 #  define PHILO_ERROS
 
@@ -17,6 +27,7 @@
 #  define FORK "/fork"
 #  define OUT "/out"
 #  define EXIT "/exit"
+#  define INC "/inc"
 # endif
 
 # ifndef COLORS

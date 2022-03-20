@@ -3,6 +3,8 @@ NAME			=	philo_bonus
 SRC	=				philo_bonus.c \
 					src/philo_valid_bonus.c \
 					src/philo_init_bonus.c \
+					src/philo_start_bonus.c \
+					src/philo_actions_bonus.c \
 					src/philo_errors_bonus.c \
 					src/philo_utils_bonus.c \
 
@@ -14,7 +16,7 @@ HEADERS		=		includes/philo_bonus.h \
 
 CC				=	gcc
 
-CFLAGS			=	-O2 -Wall -Wextra -Werror
+CFLAGS			=	-O2 -Wall -Wextra -Werror -g3 -fsanitize=thread
 
 all: $(NAME)
 

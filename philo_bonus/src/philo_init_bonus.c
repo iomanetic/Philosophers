@@ -5,6 +5,7 @@ int	philo_sem(t_data *info)
 	sem_unlink(FORK);
 	sem_unlink(OUT);
 	sem_unlink(EXIT);
+	sem_unlink(INC);
 	info->sem_forks = \
 		sem_open(FORK, O_CREAT | O_EXCL, 777, info->numb_of_philo);
 	if(info->sem_forks <= 0)
@@ -16,6 +17,10 @@ int	philo_sem(t_data *info)
 	info->sem_exit = \
 		sem_open(EXIT, O_CREAT | O_EXCL, 777, 0);
 	if(info->sem_exit <= 0)
+		return (FALSE);
+	info->sem_inc = \
+		sem_open(INC, O_CREAT | O_EXCL, 777, 1);
+	if(info->sem_inc <= 0)
 		return (FALSE);
 	return (TRUE);
 }
@@ -35,7 +40,7 @@ int	philo_malloc(t_data *info)
 	return (TRUE);
 }
 
-void	philo_write_dara(t_data *info)
+void	philo_write_data(t_data *info)
 {
 	size_t	i;
 
@@ -47,6 +52,7 @@ void	philo_write_dara(t_data *info)
 		info->philo[i].data = info;
 		info->philo[i].start_time = philo_time();
 		info->philo[i].last_eat = philo_time();
+		i++;
 	}
 }
 
@@ -70,5 +76,6 @@ int	philo_init(t_data *info, char **ag)
 	}
 	if(!philo_malloc(info))
 		return (FALSE);
+	philo_write_data(info);
 	return (TRUE);
 }
