@@ -46,7 +46,16 @@ void	philo_clean(t_data *info)
 	sem_wait(info->sem_exit);
 	while(i < info->numb_of_philo)
 	{
+		pthread_detach(info->thread[i]);
 		kill(info->philo[i].pid, SIGTERM);
 		i++;
 	}
+	sem_close(info->sem_exit);
+	sem_close(info->sem_out);
+	sem_close(info->sem_forks);
+	sem_close(info->sem_inc);
+	sem_unlink(EXIT);
+	sem_unlink(OUT);
+	sem_unlink(FORK);
+	sem_unlink(INC);
 }

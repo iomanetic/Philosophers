@@ -16,6 +16,7 @@ void	*philo_live(void *tmp)
 			printf("%ld %zu %s", philo_time() - philo->start_time, philo->id + 1, DIE);
 			sem_post(philo->data->sem_exit);
 			philo->live = 0;
+			return ((void *)0);
 		}
 		sem_post(philo->data->sem_inc);
 	}
