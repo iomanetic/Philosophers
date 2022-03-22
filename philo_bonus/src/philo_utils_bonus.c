@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_utils_bonus.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mymac <mymac@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/22 13:17:37 by mymac             #+#    #+#             */
+/*   Updated: 2022/03/22 13:27:36 by mymac            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/philo_bonus.h"
 
 int	ft_atoi(const char *str)
@@ -12,9 +24,9 @@ int	ft_atoi(const char *str)
 	{
 		if (*str < '0' || *str > '9')
 			return (-3);
-		if (output * 1 > 2147483647)
+		if (output * 1 > INT_MAX)
 			return (-1);
-		if (output * -1 < -2147483648)
+		if (output * -1 < INT_MIN)
 			return (-2);
 		output = (output * 10) + (*str - 48);
 		++str;
@@ -44,7 +56,7 @@ void	philo_clean(t_data *info)
 
 	i = 0;
 	sem_wait(info->sem_exit);
-	while(i < info->numb_of_philo)
+	while (i < info->numb_of_philo)
 	{
 		pthread_detach(info->thread[i]);
 		kill(info->philo[i].pid, SIGTERM);
@@ -58,4 +70,6 @@ void	philo_clean(t_data *info)
 	sem_unlink(OUT);
 	sem_unlink(FORK);
 	sem_unlink(INC);
+	free(info->philo);
+	free(info->thread);
 }

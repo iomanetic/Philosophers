@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_start.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tyuuki <tyuuki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mymac <mymac@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 11:10:36 by tyuuki            #+#    #+#             */
-/*   Updated: 2022/03/10 18:53:48 by tyuuki           ###   ########.fr       */
+/*   Updated: 2022/03/22 13:25:01 by mymac            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 void	philos_live(t_data *info)
 {
-	size_t	i;
+	long	i;
 	long	time;
 
 	while (info->eat_status)
 	{
 		i = 0;
-		while ((long)i < info->numb_of_philo \
+		while (i < info->numb_of_philo \
 			&& check_lives(info))
 		{
 			pthread_mutex_lock(&info->inc_mutex);
@@ -29,7 +29,7 @@ void	philos_live(t_data *info)
 			{
 				pthread_mutex_lock(&info->out_mutex);
 				printf("%ld %zu %s", philo_time() - info->philo[i].start_time,
-					info->philo[i].id, DIE);
+					info->philo[i].id + 1, DIE);
 				info->philo[i].live = 0;
 				philo_cleaner(info);
 				return ;
@@ -57,10 +57,10 @@ void	*philo_action(void *philo_i)
 
 int	philo_start(t_data *info)
 {
-	size_t	i;
+	long	i;
 
 	i = 0;
-	while ((long)i < info->numb_of_philo)
+	while (i < info->numb_of_philo)
 	{
 		if (pthread_create(&info->thread[i], NULL,
 				philo_action, &info->philo[i]) != 0)

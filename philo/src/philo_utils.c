@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tyuuki <tyuuki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mymac <mymac@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 11:43:16 by tyuuki            #+#    #+#             */
-/*   Updated: 2022/03/10 19:02:51 by tyuuki           ###   ########.fr       */
+/*   Updated: 2022/03/22 13:24:33 by mymac            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int	ft_atoi(const char *str)
 	{
 		if (*str < '0' || *str > '9')
 			return (-3);
-		if (output * 1 > 2147483647)
+		if (output * 1 > INT_MAX)
 			return (-1);
-		if (output * -1 < -2147483648)
+		if (output * -1 < INT_MIN)
 			return (-2);
 		output = (output * 10) + (*str - 48);
 		++str;
@@ -46,16 +46,16 @@ void	philo_message(t_philo *philo, char *message)
 {
 	pthread_mutex_lock(&philo->data->out_mutex);
 	printf("%ld %zu %s", philo_time() - philo->start_time,
-		philo->id, message);
+		philo->id + 1, message);
 	pthread_mutex_unlock(&philo->data->out_mutex);
 }
 
 int	check_lives(t_data *info)
 {
-	size_t	i;
+	long	i;
 
 	i = 0;
-	while ((long)i < info->numb_of_philo)
+	while (i < info->numb_of_philo)
 	{
 		pthread_mutex_lock(&info->inc_mutex);
 		if (!info->philo[i].live)
@@ -74,10 +74,10 @@ int	check_lives(t_data *info)
 
 void	philo_cleaner(t_data *info)
 {
-	size_t	i;
+	long	i;
 
 	i = 0;
-	while ((long)i < info->numb_of_philo)
+	while (i < info->numb_of_philo)
 	{
 		pthread_detach(info->thread[i]);
 		pthread_mutex_destroy(&info->forks[i]);

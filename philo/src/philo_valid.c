@@ -19,7 +19,7 @@ int	philo_validation(char **ag)
 	i = 0;
 	while (ag[i])
 	{
-		if (ft_atoi(ag[i]) < 0)
+		if (ft_atoi(ag[i]) <= 0)
 			return (philo_errors(E_NVS));
 		i++;
 	}

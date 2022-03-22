@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   philo_errors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tyuuki <tyuuki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mymac <mymac@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 11:10:51 by tyuuki            #+#    #+#             */
-/*   Updated: 2022/03/02 14:57:34 by tyuuki           ###   ########.fr       */
+/*   Updated: 2022/03/22 13:14:17 by mymac            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+int	help_errors(int flag)
+{
+	if (flag == E_EMA)
+	{
+		printf("%s", YELLOW EMA WHITE);
+		return (FALSE);
+	}
+	else if (flag == E_ETC)
+	{
+		printf("%s", YELLOW ETC WHITE);
+		return (FALSE);
+	}
+	return (TRUE);
+}
 
 int	philo_errors(int flag)
 {
@@ -29,15 +44,7 @@ int	philo_errors(int flag)
 		printf("%s", YELLOW EMI WHITE);
 		return (FALSE);
 	}
-	else if (flag == E_EMA)
-	{
-		printf("%s", YELLOW EMA WHITE);
+	if (!help_errors(flag))
 		return (FALSE);
-	}
-	else if (flag == E_ETC)
-	{
-		printf("%s", YELLOW ETC WHITE);
-		return (FALSE);
-	}
 	return (TRUE);
 }
